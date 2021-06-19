@@ -4,23 +4,23 @@ export const DIRECTIONS = {
   ArrowLeft: {
     code: 37,
     movement: -1,
-    rotation: 180
+    rotation: 180,
   },
   ArrowUp: {
     code: 38,
     movement: -GRID_SIZE,
-    rotation: 270
+    rotation: 270,
   },
   ArrowRight: {
     code: 39,
     movement: 1,
-    rotation: 0
+    rotation: 0,
   },
   ArrowDown: {
     code: 40,
     movement: GRID_SIZE,
-    rotation: 90
-  }
+    rotation: 90,
+  },
 };
 
 export const OBJECT_TYPE = {
@@ -35,21 +35,21 @@ export const OBJECT_TYPE = {
   PACMAN: 'pacman',
   GHOST: 'ghost',
   SCARED: 'scared',
-  GHOSTLAIR: 'lair'
+  GHOSTLAIR: 'lair',
 };
 
 // Lookup array for classes
 export const CLASS_LIST = [
-  OBJECT_TYPE.BLANK,
-  OBJECT_TYPE.WALL,
-  OBJECT_TYPE.DOT,
-  OBJECT_TYPE.BLINKY,
-  OBJECT_TYPE.PINKY,
-  OBJECT_TYPE.INKY,
-  OBJECT_TYPE.CLYDE,
-  OBJECT_TYPE.PILL,
-  OBJECT_TYPE.PACMAN,
-  OBJECT_TYPE.GHOSTLAIR
+  OBJECT_TYPE.BLANK, // 0
+  OBJECT_TYPE.WALL, // 1
+  OBJECT_TYPE.DOT, // 2
+  OBJECT_TYPE.BLINKY, // 3
+  OBJECT_TYPE.PINKY, // 4
+  OBJECT_TYPE.INKY, // 5
+  OBJECT_TYPE.CLYDE, // 6
+  OBJECT_TYPE.PILL, // 7
+  OBJECT_TYPE.PACMAN, // 8
+  OBJECT_TYPE.GHOSTLAIR, // 9
 ];
 
 // prettier-ignore
