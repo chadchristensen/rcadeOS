@@ -1,23 +1,54 @@
+export interface Direction {
+  movement: number,
+  rotation: number
+}
+
+export const Keys = {
+  ArrowLeft: 'ArrowLeft',
+  Left: 'Left',
+  ArrowUp: 'ArrowUp',
+  Up: 'Up',
+  ArrowRight: 'ArrowRight',
+  Right: 'Right',
+  ArrowDown: 'ArrowDown',
+  Down: 'Down'
+}
+
+export function getStandardizedKey(key: string): string {
+  switch(key) {
+    case Keys.ArrowLeft:
+    case Keys.Left:
+      return Keys.ArrowLeft;
+    case Keys.ArrowUp:
+    case Keys.Up:
+      return Keys.ArrowUp;
+    case Keys.ArrowRight:
+    case Keys.Right:
+      return Keys.ArrowRight;
+    case Keys.ArrowDown:
+    case Keys.Down:
+      return Keys.ArrowDown;
+    default:
+      return 'UNKNOWN';
+  }
+}
+
 export const GRID_SIZE = 20;
 export const CELL_SIZE = 20;
-export const DIRECTIONS = {
-  ArrowLeft: {
-    code: 37,
+export const DIRECTIONS_MAP: {[key: string]: Direction} = {
+  [Keys.ArrowLeft]: {
     movement: -1,
     rotation: 180,
   },
-  ArrowUp: {
-    code: 38,
+  [Keys.ArrowUp]: {
     movement: -GRID_SIZE,
     rotation: 270,
   },
-  ArrowRight: {
-    code: 39,
+  [Keys.ArrowRight]: {
     movement: 1,
     rotation: 0,
   },
-  ArrowDown: {
-    code: 40,
+  [Keys.ArrowDown]: {
     movement: GRID_SIZE,
     rotation: 90,
   },
