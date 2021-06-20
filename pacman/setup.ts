@@ -3,6 +3,20 @@ export interface Direction {
   rotation: number
 }
 
+export interface Character {
+  position: number,
+  speed: number,
+  direction: Direction,
+  timer: number,
+  isPowerPillActive: boolean,
+  rotation: boolean,
+  shouldMove(): boolean,
+  getNextMove(objectExists: (number, string) => boolean): {nextMovePosition: number, direction: Direction },
+  makeMove(): { classesToRemove: string[], classesToAdd: string[] },
+  handleKeyInput(evt: KeyboardEvent, objectExists: (number, string) => boolean): void,
+  setNewPosition(nextMovePosition: number): void 
+}
+
 export const Keys = {
   ArrowLeft: 'ArrowLeft',
   Left: 'Left',

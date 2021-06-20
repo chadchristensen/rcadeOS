@@ -1,10 +1,10 @@
-import { OBJECT_TYPE, DIRECTIONS_MAP, Direction, Keys, getStandardizedKey } from './setup';
+import { OBJECT_TYPE, DIRECTIONS_MAP, Direction, Keys, getStandardizedKey, Character } from './setup';
 
-class Pacman {
+class Pacman implements Character {
   position: number;
   speed: number;
   direction: Direction;
-  timer: 0;
+  timer = 0;
   isPowerPillActive = false;
   rotation = true;
 
@@ -31,11 +31,11 @@ class Pacman {
       objectExists(nextMovePosition, OBJECT_TYPE.GHOSTLAIR)
     ) {
       nextMovePosition = this.position;
+    }
 
-      return {
-        nextMovePosition,
-        direction: this.direction
-      }
+    return {
+      nextMovePosition,
+      direction: this.direction
     }
   }
 
@@ -53,7 +53,7 @@ class Pacman {
     this.position = nextMovePosition
   }
 
-  handleKeyInput(evt: KeyboardEvent, objectExists: (number, string) => boolean) {
+  handleKeyInput(evt: KeyboardEvent, objectExists: (number, string) => boolean): void {
     let direction: Direction;
     let keys = Object.values(Keys);
 
@@ -64,7 +64,10 @@ class Pacman {
     }
 
     const nextMovePosition = this.position + direction.movement;
-    if(objectExists(nextMovePosition, OBJECT_TYPE.WALL)) return;
+    if(
+      objectExists(nextMovePosition, OBJECT_TYPE.WALL) ||
+      objectExists(nextMovePosition, OBJECT_TYPE.GHOSTLAIR)
+    ) return;
 
     this.direction = direction;
   }

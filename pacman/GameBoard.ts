@@ -1,4 +1,4 @@
-import { GRID_SIZE, CELL_SIZE, OBJECT_TYPE, CLASS_LIST } from './setup';
+import { GRID_SIZE, CELL_SIZE, OBJECT_TYPE, CLASS_LIST, Character } from './setup';
 
 class GameBoard {
   DOMGrid: any;
@@ -47,7 +47,27 @@ class GameBoard {
   }
 
   rotateDiv(position: number, degrees: number): void {
-    this.grid[position].style.transform = `rotate${degrees}deg`;
+    this.grid[position].style.transform = `rotate(${degrees}deg)`;
+  }
+
+  moveCharacter(character: Character): void {
+    if (character.shouldMove()) {
+      const { nextMovePosition, direction } = character.getNextMove(
+        this.objectExists
+      );
+
+      const { classesToRemove, classesToAdd } = character.makeMove();
+
+      if (character.rotation && nextMovePosition !== character.position) {
+        this.rotateDiv(nextMovePosition, character.direction.rotation);
+        this.rotateDiv(character.position, 0);
+      }
+
+      this.removeObject(character.position, classesToRemove);
+      this.addObject(nextMovePosition, classesToAdd);
+
+      character.setNewPosition(nextMovePosition);
+    }
   }
 
   static createGameBoard(DOMGrid, level: number[]): GameBoard {
