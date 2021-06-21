@@ -24,7 +24,13 @@ let isPowerPillActive: boolean = false;
 const powerPillTimer = null;
 
 function gameOver(pacman, grid): void {
+  document.removeEventListener('keydown', evt => pacman.handleKeyInput(evt, gameBoard.objectExists));
 
+  gameBoard.showGameStatus(isGameWin);
+
+  clearInterval(timer);
+
+  startButton.classList.remove('hide');
 }
 
 function checkCollision(pacman: Character, ghosts: Character[]) {
