@@ -8,13 +8,13 @@ export interface Character {
   speed: number,
   direction: Direction,
   timer: number,
-  isPowerPillActive: boolean,
+  isPowerPillActive?: boolean,
   rotation: boolean,
   shouldMove(): boolean,
   getNextMove(objectExists: (number, string) => boolean): {nextMovePosition: number, direction: Direction },
   makeMove(): { classesToRemove: string[], classesToAdd: string[] },
-  handleKeyInput(evt: KeyboardEvent, objectExists: (number, string) => boolean): void,
-  setNewPosition(nextMovePosition: number): void 
+  handleKeyInput?(evt: KeyboardEvent, objectExists: (number, string) => boolean): void,
+  setNewPosition(nextMovePosition: number, direction?: Direction): void 
 }
 
 export const Keys = {
