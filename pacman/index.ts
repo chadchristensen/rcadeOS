@@ -27,14 +27,33 @@ function gameOver(pacman, grid): void {
 
 }
 
-function checkCollision(pacman, ghosts) {
+function checkCollision(pacman: Character, ghosts: Character[]) {
+  const collidedGhost = ghosts.find( ghost => pacman.position === ghost.position);
 
+  if (collidedGhost) {
+    if (pacman.isPowerPillActive) {
+      gameBoard.removeObject(collidedGhost.position, [
+        OBJECT_TYPE.GHOST,
+        OBJECT_TYPE.SCARED,
+        collidedGhost.name
+      ]);
+
+      collidedGhost.position = collidedGhost.startPosition;
+      score += 100;
+    } else {
+      gameBoard.removeObject(pacman.position, [OBJECT_TYPE.PACMAN]);
+      gameBoard.rotateDiv(pacman.position, 0);
+      gameOver(pacman, gameGrid);
+    }
+  }
 }
 
 function gameLoop(pacman, ghosts): void {
   gameBoard.moveCharacter(pacman);
+  checkCollision(pacman, ghosts);
 
   ghosts.forEach(ghost => gameBoard.moveCharacter(ghost));
+  checkCollision(pacman, ghosts);
 }
 
 function startGame(): void {

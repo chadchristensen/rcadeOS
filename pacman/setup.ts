@@ -5,11 +5,13 @@ export interface Direction {
 
 export interface Character {
   position: number,
+  startPosition?: number,
   speed: number,
   direction: Direction,
   timer: number,
   isPowerPillActive?: boolean,
   rotation: boolean,
+  name?: string,
   shouldMove(): boolean,
   getNextMove(objectExists: (number, string) => boolean): {nextMovePosition: number, direction: Direction },
   makeMove(): { classesToRemove: string[], classesToAdd: string[] },
