@@ -21,7 +21,7 @@ let score: number = 0;
 let timer = null;
 let isGameWin: boolean = false;
 let isPowerPillActive: boolean = false;
-const powerPillTimer = null;
+let powerPillTimer = null;
 
 function gameOver(pacman, grid): void {
   document.removeEventListener('keydown', evt => pacman.handleKeyInput(evt, gameBoard.objectExists));
@@ -68,6 +68,31 @@ function gameLoop(pacman, ghosts): void {
     gameBoard.dotCount--;
     score += 10;
   }
+
+  // Check if Pacman eats power pill
+  if (gameBoard.objectExists(pacman.position, OBJECT_TYPE.PILL)) {
+    gameBoard.removeObject(pacman.position, [OBJECT_TYPE.PILL]);
+
+    pacman.isPowerPillActive = true;
+    score += 50;
+
+    clearTimeout(powerPillTimer);
+    powerPillTimer = setTimeout(() => pacman.isPowerPillActive = false, POWER_PILL_TIME);
+
+  }
+
+  if (pacman.isPowerPillActive !== isPowerPillActive) {
+    isPowerPillActive = pacman.isPowerPillActive;
+    ghosts.forEach(ghost => ghost.isScared = isPowerPillActive)
+  }
+
+  if (gameBoard.dotCount === 0) {
+    isGameWin = true;
+    gameOver(pacman, ghosts);
+  }
+
+  // Show the score
+  scoreTable.innerHTML = `${score}`;
 }
 
 function startGame(): void {
