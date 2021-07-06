@@ -21,5 +21,8 @@
     "plugins": [
       "@babel/plugin-transform-runtime"
     ]
+  },
+  "dependencies": {
+    "@types/node": "^15.12.5"
   }
 }

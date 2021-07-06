@@ -6,6 +6,13 @@ import GameBoard from './GameBoard';
 import Pacman from './Pacman';
 import Ghost from './Ghost';
 
+// Sounds
+const soundDot = require('./sounds/munch.wav');
+const soundPill = require('./sounds/pill.wav');
+const soundGameStart = require('./sounds/game_start.wav');
+const soundGameOver = require('./sounds/death.wav');
+const soundGhost = require('./sounds/eat_ghost.wav');
+
 // DOM Elements
 const gameGrid: HTMLDivElement = document.querySelector('#game');
 const scoreTable: HTMLDivElement = document.querySelector('#score');
@@ -23,7 +30,13 @@ let isGameWin: boolean = false;
 let isPowerPillActive: boolean = false;
 let powerPillTimer = null;
 
+function playAudio(audio) {
+  const soundEffect = new Audio(audio);
+  soundEffect.play();
+}
+
 function gameOver(pacman, grid): void {
+  playAudio(soundGameOver);
   document.removeEventListener('keydown', evt => pacman.handleKeyInput(evt, gameBoard.objectExists));
 
   gameBoard.showGameStatus(isGameWin);
@@ -38,6 +51,7 @@ function checkCollision(pacman: Character, ghosts: Character[]) {
 
   if (collidedGhost) {
     if (pacman.isPowerPillActive) {
+      playAudio(soundGhost);
       gameBoard.removeObject(collidedGhost.position, [
         OBJECT_TYPE.GHOST,
         OBJECT_TYPE.SCARED,
@@ -63,6 +77,7 @@ function gameLoop(pacman, ghosts): void {
 
   // Check if Pacman eats dots
   if (gameBoard.objectExists(pacman.position, OBJECT_TYPE.DOT)) {
+    playAudio(soundDot);
     gameBoard.removeObject(pacman.position, [OBJECT_TYPE.DOT]);
 
     gameBoard.dotCount--;
@@ -71,6 +86,7 @@ function gameLoop(pacman, ghosts): void {
 
   // Check if Pacman eats power pill
   if (gameBoard.objectExists(pacman.position, OBJECT_TYPE.PILL)) {
+    playAudio(soundPill);
     gameBoard.removeObject(pacman.position, [OBJECT_TYPE.PILL]);
 
     pacman.isPowerPillActive = true;
@@ -96,6 +112,7 @@ function gameLoop(pacman, ghosts): void {
 }
 
 function startGame(): void {
+  playAudio(soundGameStart);
   isGameWin = false;
   isPowerPillActive = false;
   score = 0;
